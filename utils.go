@@ -48,7 +48,6 @@ func getMemorySize() (size uint64, err error) {
                 return 0, err
             }
             size, err := strconv.Atoi(parts[1])
-            fmt.Printf("Found memory %d\n", size)
             if err != nil {
                 return 0, err
             }
