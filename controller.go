@@ -7,17 +7,35 @@ import (
 	"time"
 	"encoding/json"
 	"io/ioutil"
+	"fmt"
 )
 
 
+
+
+type Network struct {
+	Address string
+	Netmask string
+}
+
+func NewNetwork(address, netmask string) (network *Network, err error) {
+	network = new(Network)
+	network.Address = address
+	network.Netmask = netmask
+	return network, err
+}
 type Host struct {
 	Name string
 	Id string
 	Cores int
 	Memory uint64
-	PrivateNetwork string
+	PrivateNetwork Network
 	LastUpdated time.Time
 	controller *ServiceController
+}
+
+func (h *Host) String() string {
+	return fmt.Sprintf("Host (%s, %s)", h.Name, h.Id)
 }
 
 type ResourcePool struct {
@@ -113,7 +131,7 @@ func CurrentContextAsHost() (host *Host, err error) {
         return nil, err
     }
     host.Id = hostid_str
-    host.PrivateNetwork = ""
+    host.PrivateNetwork = Network{}
     host.Cores = cpus
     host.Memory = memory
     host.LastUpdated = time.Now()

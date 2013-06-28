@@ -37,12 +37,13 @@ func init() {
 }
 
 
-func updateThisHost(du) {
+func updateThisHost() {
     go func() {
         thisHost, _ := shipyard.CurrentContextAsHost()
         controller.Hosts[thisHost.Id] = thisHost
         controller.Save()
-   
+   }()
+}
 
 func runServer() {
     var err error
